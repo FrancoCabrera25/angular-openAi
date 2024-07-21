@@ -21,7 +21,6 @@ export interface TextMessageEvent {
 export class TextMessageBoxFileComponent {
 
   public placeHolder = input<string>();
-  public disabledCorrections = input<boolean>(false);
   public sendMessage = output<TextMessageEvent>();
 
   public file: File | undefined;

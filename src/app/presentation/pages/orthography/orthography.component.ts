@@ -1,6 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ChatMessageComponent, MyMessageComponent, TextMessageBoxComponent, TextMessageBoxFileComponent, TextMessageEvent, TypingLoaderComponent } from '@components/index';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+  ChatMessageComponent,
+  MyMessageComponent,
+  TextMessageBoxComponent,
+  TextMessageBoxEvent,
+  TextMessageBoxFileComponent,
+  TextMessageBoxSelectComponent,
+  TextMessageEvent,
+  TypingLoaderComponent,
+} from '@components/index';
+import { Message } from '@interface/index';
+import { OpenAiService } from 'app/presentation/services/openAi.service';
 
 @Component({
   selector: 'app-orthography',
@@ -11,19 +22,22 @@ import { ChatMessageComponent, MyMessageComponent, TextMessageBoxComponent, Text
     MyMessageComponent,
     TypingLoaderComponent,
     TextMessageBoxComponent,
-    TextMessageBoxFileComponent
+    TextMessageBoxFileComponent,
+    TextMessageBoxSelectComponent,
   ],
   templateUrl: './orthography.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default  class OrthographyComponent {
+export default class OrthographyComponent {
+  private openAiService = inject(OpenAiService);
+  public messages = signal<Message[]>([]);
+  public isLoading = signal<boolean>(false);
 
-
-  handleMessage(prompt: string){
-    console.log("prompt", prompt);
+  handleMessage(prompt: string) {
+    console.log('prompt', prompt);
   }
-
-  handleMessageWithFile( { prompt, file  }: TextMessageEvent){
-    console.log("prompt", {});
+  handleMessageWithFile({ prompt, file }: TextMessageEvent) {
+    console.log('prompt', {});
   }
- }
+  handleMessageWithSelect(event: TextMessageBoxEvent): void {}
+}
